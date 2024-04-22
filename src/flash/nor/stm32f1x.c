@@ -1522,6 +1522,10 @@ COMMAND_HANDLER(stm32x_handle_options_write_command)
 			optionbyte |= (1 << 2);
 		else if (strcmp("RSTSTNDBY", CMD_ARGV[0]) == 0)
 			optionbyte &= ~(1 << 2);
+		else if (strcmp("BOOTSEL", CMD_ARGV[0]) == 0)
+			optionbyte |= (1 << 7);
+		else if (strcmp("NBOOTSEL", CMD_ARGV[0]) == 0)
+			optionbyte &= ~(1 << 7);
 		else if (strcmp("USEROPT", CMD_ARGV[0]) == 0) {
 			if (CMD_ARGC < 2)
 				return ERROR_COMMAND_SYNTAX_ERROR;
@@ -1701,7 +1705,8 @@ static const struct command_registration stm32f1x_exec_command_handlers[] = {
 		.mode = COMMAND_EXEC,
 		.usage = "bank_id ('SWWDG'|'HWWDG') "
 			"('RSTSTNDBY'|'NORSTSTNDBY') "
-			"('RSTSTOP'|'NORSTSTOP') ('USEROPT' user_data)",
+			"('RSTSTOP'|'NORSTSTOP') ('BOOTSEL'|'NBOOTSEL') "
+			"('USEROPT' user_data)",
 		.help = "Replace bits in device option bytes.",
 	},
 	{
